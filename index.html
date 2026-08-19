@@ -1,0 +1,1727 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>UNBAN CENTER</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Arial,sans-serif;
+  min-height:100vh;
+  color:#fff;
+  background:
+    radial-gradient(circle at 10% 10%,#123b50,transparent 32%),
+    radial-gradient(circle at 90% 90%,#34135c,transparent 32%),
+    #03060d;
+}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+input,select,textarea{
+  width:100%;
+  padding:13px;
+  border:1px solid #ffffff18;
+  border-radius:12px;
+  outline:0;
+  color:#fff;
+  background:#070c15;
+}
+button:focus,input:focus,select:focus,textarea:focus{
+  outline:2px solid #00d9ff44;
+}
+#loginPage{
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:#02050a;
+}
+.login-box{
+  width:100%;
+  max-width:400px;
+  padding:32px;
+  border:1px solid #ffffff14;
+  border-radius:25px;
+  background:#09111e;
+  box-shadow:0 30px 100px #000;
+}
+.logo{
+  width:65px;
+  height:65px;
+  margin:auto;
+  display:grid;
+  place-items:center;
+  border-radius:20px;
+  font-size:30px;
+  font-weight:900;
+  background:linear-gradient(135deg,#00d9ff,#8655ff);
+}
+.login-box h1{
+  margin-top:17px;
+  text-align:center;
+  font-size:21px;
+  letter-spacing:3px;
+}
+.login-box p{
+  margin:8px 0 24px;
+  text-align:center;
+  color:#68778c;
+  font-size:9px;
+  letter-spacing:2px;
+}
+label{
+  display:block;
+  margin:13px 0 7px;
+  color:#91a0b7;
+  font-size:10px;
+  letter-spacing:1px;
+}
+.login-btn,.primary{
+  width:100%;
+  margin-top:17px;
+  padding:13px;
+  border:0;
+  border-radius:12px;
+  color:#fff;
+  font-weight:bold;
+  background:linear-gradient(110deg,#00bcd4,#6366f1,#8b5cf6);
+}
+#error{
+  min-height:18px;
+  margin-top:9px;
+  text-align:center;
+  color:#ff718b;
+  font-size:10px;
+}
+#app{display:none}
+.sidebar{
+  position:fixed;
+  inset:0 auto 0 0;
+  width:235px;
+  z-index:100;
+  padding:20px 15px;
+  border-right:1px solid #ffffff0d;
+  background:#04070d;
+}
+.brand{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:5px 8px 20px;
+}
+.brand-logo{
+  width:42px;
+  height:42px;
+  display:grid;
+  place-items:center;
+  border-radius:12px;
+  font-weight:900;
+  background:linear-gradient(135deg,#00d9ff,#8655ff);
+}
+.brand b{display:block;font-size:12px}
+.brand small{color:#5e6d83;font-size:8px}
+.role{
+  margin:0 5px 18px;
+  padding:9px;
+  border:1px solid #00d9ff20;
+  border-radius:10px;
+  color:#00d9ff;
+  background:#00d9ff08;
+  font-size:9px;
+}
+.nav-title{
+  margin:16px 10px 7px;
+  color:#4f5e73;
+  font-size:8px;
+  letter-spacing:2px;
+}
+.nav button{
+  width:100%;
+  margin-bottom:5px;
+  padding:11px;
+  border:0;
+  border-left:2px solid transparent;
+  border-radius:8px;
+  text-align:left;
+  color:#8794a9;
+  background:transparent;
+}
+.nav button:hover{
+  color:#fff;
+  background:#00d9ff0e;
+  border-left-color:#00d9ff;
+}
+.admin-only{display:none}
+.sidebar-logout{
+  position:absolute;
+  left:15px;
+  right:15px;
+  bottom:50px;
+}
+.sidebar-logout button{
+  width:100%;
+  padding:10px;
+  border:1px solid #ff557733;
+  border-radius:10px;
+  color:#ff8199;
+  background:#ff55770b;
+}
+.status{
+  position:absolute;
+  bottom:15px;
+  left:15px;
+  color:#6e7b8f;
+  font-size:8px;
+}
+.dot{
+  display:inline-block;
+  width:7px;
+  height:7px;
+  margin-right:5px;
+  border-radius:50%;
+  background:#39f59b;
+}
+main{
+  margin-left:235px;
+  padding:24px;
+}
+.top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:18px;
+}
+.top small{
+  color:#00d9ff;
+  font-size:9px;
+  letter-spacing:3px;
+}
+.top h2{margin-top:5px;font-size:25px}
+.clock{color:#66758b;font-size:9px}
+.mobile-actions{
+  display:none;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-bottom:16px;
+}
+.mobile-actions button{
+  padding:12px 5px;
+  border:1px solid #ffffff12;
+  border-radius:12px;
+  color:#fff;
+  font-size:9px;
+  font-weight:bold;
+  background:#ffffff08;
+}
+.mobile-actions .admin-btn{
+  border-color:#00d9ff25;
+  background:#00bcd415;
+}
+.mobile-actions .logout-btn{
+  border-color:#ff557733;
+  color:#ff8199;
+  background:#ff55770b;
+}
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:12px;
+  margin-bottom:17px;
+}
+.card{
+  border:1px solid #ffffff0e;
+  border-radius:18px;
+  background:#0a1220dd;
+  box-shadow:0 15px 50px #0005;
+}
+.stat{padding:17px}
+.stat small{
+  color:#68778c;
+  font-size:8px;
+  letter-spacing:1px;
+}
+.stat strong{
+  display:block;
+  margin-top:7px;
+  font-size:21px;
+}
+.cyan{color:#00d9ff}
+.green{color:#39f59b}
+.purple{color:#b99cff}
+.workspace{
+  display:grid;
+  grid-template-columns:365px 1fr;
+  gap:16px;
+}
+.head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:18px 18px 4px;
+}
+.head h3{font-size:14px}
+.head span{color:#65748a;font-size:8px}
+.form{padding:12px 18px 18px}
+.actions{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+}
+.secondary,.danger{
+  width:100%;
+  margin-top:8px;
+  padding:11px;
+  border-radius:10px;
+}
+.secondary{
+  border:1px solid #ffffff12;
+  color:#fff;
+  background:#ffffff08;
+}
+.danger{
+  border:1px solid #ff557722;
+  color:#ff8199;
+  background:#ff55770b;
+}
+textarea{
+  height:320px;
+  resize:vertical;
+  line-height:1.55;
+  font-size:12px;
+}
+.counter{
+  margin-top:5px;
+  text-align:right;
+  color:#59687c;
+  font-size:8px;
+}
+.admin-section{
+  display:none;
+  margin-top:16px;
+}
+.admin-tools{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  padding:12px 18px 18px;
+}
+.user-controls{
+  display:grid;
+  grid-template-columns:1fr 1fr auto;
+  gap:8px;
+  padding:12px 18px;
+}
+.user-controls button{
+  padding:0 16px;
+  border:0;
+  border-radius:10px;
+  color:#fff;
+  font-weight:bold;
+  background:linear-gradient(110deg,#00bcd4,#6366f1);
+}
+.search-box{padding:0 18px 10px}
+.user-list{padding:4px 18px 18px}
+.user-row{
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:12px;
+  padding:13px 0;
+  border-bottom:1px solid #ffffff0c;
+}
+.user-name{font-size:11px;font-weight:bold}
+.user-meta{
+  margin-top:4px;
+  color:#65748a;
+  font-size:8px;
+}
+.user-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:5px;
+  justify-content:flex-end;
+}
+.small-btn{
+  padding:7px 8px;
+  border:1px solid #ffffff12;
+  border-radius:7px;
+  color:#fff;
+  background:#ffffff08;
+  font-size:8px;
+}
+.small-btn.red{
+  border-color:#ff557722;
+  color:#ff8199;
+}
+.history{
+  margin-top:16px;
+  padding-bottom:8px;
+}
+.history-list{padding:4px 18px}
+.history-row{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:12px 0;
+  border-bottom:1px solid #ffffff0c;
+  font-size:10px;
+}
+.badge{
+  height:max-content;
+  padding:5px 7px;
+  border-radius:6px;
+  color:#39f59b;
+  background:#39f59b0b;
+  font-size:8px;
+}
+.toast{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  z-index:10000;
+  padding:12px 15px;
+  border:1px solid #ffffff12;
+  border-radius:10px;
+  color:#fff;
+  background:#111a2a;
+  box-shadow:0 15px 40px #0008;
+  font-size:10px;
+  opacity:0;
+  transform:translateY(30px);
+  transition:.2s;
+}
+.toast.show{
+  opacity:1;
+  transform:none;
+}
+@media(max-width:900px){
+  .sidebar{display:none}
+  main{margin-left:0;padding:17px}
+  .mobile-actions{display:grid}
+  .stats{grid-template-columns:1fr 1fr}
+  .workspace{grid-template-columns:1fr}
+  .user-controls{grid-template-columns:1fr}
+  .user-controls button{padding:12px}
+  .admin-tools{grid-template-columns:1fr}
+}
+@media(max-width:550px){
+  main{padding:13px}
+  .top h2{font-size:21px}
+  .stat{padding:14px}
+  .stat strong{font-size:18px}
+  .actions{grid-template-columns:1fr}
+  .user-row{grid-template-columns:1fr}
+  .user-actions{justify-content:flex-start}
+  textarea{height:270px}
+}
+</style>
+</head>
+
+<body>
+
+<div id="loginPage">
+  <div class="login-box">
+
+    <div class="logo">U</div>
+
+    <h1>UNBAN CENTER</h1>
+    <p>SECURE COMMAND PANEL</p>
+
+    <label>USERNAME</label>
+    <input id="loginUser" autocomplete="username"
+           placeholder="Masukkan username">
+
+    <label>PASSWORD</label>
+    <input id="loginPass" type="password"
+           autocomplete="current-password"
+           placeholder="Masukkan password">
+
+    <button class="login-btn" onclick="login()">
+      🔐 LOGIN
+    </button>
+
+    <div id="error"></div>
+
+  </div>
+</div>
+
+
+<div id="app">
+
+<aside class="sidebar">
+
+  <div class="brand">
+    <div class="brand-logo">U</div>
+    <div>
+      <b>UNBAN CENTER</b>
+      <small>COMMAND PANEL</small>
+    </div>
+  </div>
+
+  <div class="role">
+    ROLE: <b id="roleText">USER</b>
+  </div>
+
+  <div class="nav-title">GENERAL</div>
+
+  <nav class="nav">
+    <button onclick="go('generator')">◈ Dashboard</button>
+    <button onclick="go('generator')">✦ Generator</button>
+    <button onclick="go('history')">◷ History</button>
+  </nav>
+
+  <div class="admin-only" id="adminMenu">
+
+    <div class="nav-title">ADMIN ONLY</div>
+
+    <nav class="nav">
+      <button onclick="go('adminPanel')">
+        ♛ Admin Dashboard
+      </button>
+
+      <button onclick="go('users')">
+        ♙ Kelola User
+      </button>
+    </nav>
+
+  </div>
+
+  <div class="sidebar-logout">
+    <button onclick="logout()">⎋ LOGOUT</button>
+  </div>
+
+  <div class="status">
+    <span class="dot"></span> System Online
+  </div>
+
+</aside>
+
+
+<main>
+
+  <div class="top">
+    <div>
+      <small>CONTROL CENTER</small>
+      <h2>Command Dashboard</h2>
+    </div>
+
+    <div class="clock" id="clock"></div>
+  </div>
+
+
+  <div class="mobile-actions">
+
+    <button id="mobileAdminBtn"
+            class="admin-btn"
+            onclick="go('adminPanel')">
+      👑 ADMIN
+    </button>
+
+    <button id="mobileUsersBtn"
+            class="admin-btn"
+            onclick="go('users')">
+      👥 USERS
+    </button>
+
+    <button onclick="go('history')">
+      ◷ HISTORY
+    </button>
+
+    <button class="logout-btn" onclick="logout()">
+      ⎋ LOGOUT
+    </button>
+
+  </div>
+
+
+  <div class="stats">
+
+    <div class="card stat">
+      <small>TOTAL REPORT</small>
+      <strong class="cyan" id="total">0</strong>
+    </div>
+
+    <div class="card stat">
+      <small>STATUS</small>
+      <strong class="green">ONLINE</strong>
+    </div>
+
+    <div class="card stat">
+      <small>TOTAL USER</small>
+      <strong class="purple" id="userCount">0</strong>
+    </div>
+
+    <div class="card stat">
+      <small>ROLE</small>
+      <strong id="statRole">USER</strong>
+    </div>
+
+  </div>
+
+
+  <section class="workspace" id="generator">
+
+    <div class="card">
+
+      <div class="head">
+        <h3>Report Generator</h3>
+        <span>INPUT</span>
+      </div>
+
+      <div class="form">
+
+        <label>NAMA</label>
+        <input id="name" placeholder="Nama pengguna">
+
+        <label>NOMOR</label>
+        <input id="number" placeholder="+628xxxxxxxxxx">
+
+        <label>JENIS BAN</label>
+
+        <select id="banType">
+          <option value="temporary">Ban Sementara</option>
+          <option value="permanent">Ban Permanen</option>
+          <option value="spam">Deteksi Spam</option>
+          <option value="hacked">Akun Disalahgunakan</option>
+          <option value="unknown">Penyebab Tidak Diketahui</option>
+        </select>
+
+        <label>BAHASA</label>
+
+        <select id="language">
+          <option value="id">Indonesia</option>
+          <option value="en">English</option>
+        </select>
+
+        <button class="primary" onclick="generate()">
+          ⚡ GENERATE REPORT
+        </button>
+
+        <div class="actions">
+
+          <button class="secondary" onclick="copyReport()">
+            📋 COPY
+          </button>
+
+          <button class="secondary" onclick="downloadReport()">
+            ↓ DOWNLOAD
+          </button>
+
+        </div>
+
+        <button class="danger" onclick="resetForm()">
+          ↻ RESET
+        </button>
+
+      </div>
+    </div>
+
+
+    <div class="card">
+
+      <div class="head">
+        <h3>Live Preview</h3>
+        <span>OUTPUT</span>
+      </div>
+
+      <div class="form">
+
+        <textarea
+          id="result"
+          placeholder="Hasil laporan muncul di sini..."
+          oninput="counter()"></textarea>
+
+        <div class="counter">
+          <span id="chars">0</span> characters
+        </div>
+
+      </div>
+    </div>
+
+  </section>
+
+
+  <section class="card admin-section" id="adminPanel">
+
+    <div class="head">
+      <h3>♛ Administrator Dashboard</h3>
+      <span>ADMIN ONLY</span>
+    </div>
+
+    <div class="admin-tools">
+
+      <button class="secondary" onclick="clearHistory()">
+        🗑 HAPUS HISTORY
+      </button>
+
+      <button class="secondary" onclick="resetStats()">
+        ↻ RESET STATISTIK
+      </button>
+
+    </div>
+
+  </section>
+
+
+  <section class="card admin-section" id="users">
+
+    <div class="head">
+      <h3>♙ Kelola Pengguna</h3>
+      <span>ADMIN ONLY</span>
+    </div>
+
+    <div class="user-controls">
+
+      <input id="newUser"
+             placeholder="Username baru">
+
+      <input id="newPass"
+             type="password"
+             placeholder="Password baru">
+
+      <button onclick="addUser()">
+        + TAMBAH USER
+      </button>
+
+    </div>
+
+    <div class="search-box">
+      <input id="searchUser"
+             placeholder="🔎 Cari username..."
+             oninput="renderUsers()">
+    </div>
+
+    <div class="user-list" id="userList"></div>
+
+  </section>
+
+
+  <section class="card history" id="history">
+
+    <div class="head">
+      <h3>Recent Reports</h3>
+      <span id="historyCount">0 ITEMS</span>
+    </div>
+
+    <div class="history-list" id="historyList"></div>
+
+  </section>
+
+</main>
+</div>
+
+
+<div class="toast" id="toast"></div>
+
+
+<script>
+"use strict";
+
+/* =========================
+   DATA
+========================= */
+
+const DEFAULT_ACCOUNTS = [
+  {
+    username:"admin",
+    password:"12345678",
+    role:"admin"
+  },
+  {
+    username:"user",
+    password:"user123",
+    role:"user"
+  }
+];
+
+function getAccounts(){
+  try{
+    const data = JSON.parse(
+      localStorage.getItem("unban_accounts") || "null"
+    );
+
+    return Array.isArray(data) && data.length
+      ? data
+      : DEFAULT_ACCOUNTS.map(x => ({...x}));
+  }catch(e){
+    return DEFAULT_ACCOUNTS.map(x => ({...x}));
+  }
+}
+
+let accounts = getAccounts();
+
+let reports = [];
+
+try{
+  const data = JSON.parse(
+    localStorage.getItem("unban_reports") || "[]"
+  );
+
+  reports = Array.isArray(data) ? data : [];
+}catch(e){
+  reports = [];
+}
+
+let total = Number(
+  localStorage.getItem("unban_total") || 0
+);
+
+if(!Number.isFinite(total)){
+  total = 0;
+}
+
+
+/* =========================
+   STORAGE
+========================= */
+
+function saveAccounts(){
+  try{
+    localStorage.setItem(
+      "unban_accounts",
+      JSON.stringify(accounts)
+    );
+  }catch(e){
+    showToast("Penyimpanan browser tidak tersedia.");
+  }
+}
+
+function saveReports(){
+  try{
+    localStorage.setItem(
+      "unban_reports",
+      JSON.stringify(reports)
+    );
+
+    localStorage.setItem(
+      "unban_total",
+      String(total)
+    );
+  }catch(e){
+    showToast("Gagal menyimpan data browser.");
+  }
+}
+
+
+/* =========================
+   LOGIN
+========================= */
+
+function login(){
+
+  const username =
+    document.getElementById("loginUser")
+      .value.trim();
+
+  const password =
+    document.getElementById("loginPass")
+      .value;
+
+  const found = accounts.find(
+    user =>
+      user.username === username &&
+      user.password === password
+  );
+
+  if(!found){
+
+    document.getElementById("error")
+      .textContent =
+      "Username atau password salah.";
+
+    return;
+  }
+
+  try{
+    sessionStorage.setItem(
+      "unban_logged",
+      "true"
+    );
+
+    sessionStorage.setItem(
+      "unban_user",
+      found.username
+    );
+
+    sessionStorage.setItem(
+      "unban_role",
+      found.role
+    );
+  }catch(e){
+    showToast("Sesi browser tidak tersedia.");
+  }
+
+  openApp();
+}
+
+
+/* =========================
+   APP
+========================= */
+
+function openApp(){
+
+  document.getElementById("loginPage")
+    .style.display = "none";
+
+  document.getElementById("app")
+    .style.display = "block";
+
+  applyRole();
+  loadAll();
+}
+
+function isLogged(){
+
+  try{
+    return sessionStorage.getItem(
+      "unban_logged"
+    ) === "true";
+  }catch(e){
+    return false;
+  }
+}
+
+function getRole(){
+
+  try{
+    return sessionStorage.getItem(
+      "unban_role"
+    ) || "user";
+  }catch(e){
+    return "user";
+  }
+}
+
+function isAdmin(){
+  return getRole() === "admin";
+}
+
+
+/* =========================
+   ROLE UI
+========================= */
+
+function applyRole(){
+
+  const admin = isAdmin();
+
+  document.getElementById("roleText")
+    .textContent =
+    admin ? "ADMIN" : "USER";
+
+  document.getElementById("statRole")
+    .textContent =
+    admin ? "ADMIN" : "USER";
+
+  const menu =
+    document.getElementById("adminMenu");
+
+  const adminButton =
+    document.getElementById("mobileAdminBtn");
+
+  const usersButton =
+    document.getElementById("mobileUsersBtn");
+
+  menu.style.display =
+    admin ? "block" : "none";
+
+  adminButton.style.display =
+    admin ? "block" : "none";
+
+  usersButton.style.display =
+    admin ? "block" : "none";
+}
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+function logout(){
+
+  try{
+    sessionStorage.removeItem("unban_logged");
+    sessionStorage.removeItem("unban_user");
+    sessionStorage.removeItem("unban_role");
+  }catch(e){}
+
+  location.reload();
+}
+
+
+/* =========================
+   NAVIGATION
+========================= */
+
+function go(id){
+
+  if(
+    (id === "adminPanel" || id === "users") &&
+    !isAdmin()
+  ){
+    showToast("⛔ Fitur khusus admin.");
+    return;
+  }
+
+  const target =
+    document.getElementById(id);
+
+  if(!target) return;
+
+  if(target.classList.contains("admin-section")){
+    target.style.display = "block";
+  }
+
+  target.scrollIntoView({
+    behavior:"smooth",
+    block:"start"
+  });
+}
+
+
+/* =========================
+   USER MANAGEMENT
+========================= */
+
+function addUser(){
+
+  if(!isAdmin()) return;
+
+  const username =
+    document.getElementById("newUser")
+      .value.trim();
+
+  const password =
+    document.getElementById("newPass")
+      .value;
+
+  if(!username || !password){
+    showToast(
+      "Username dan password wajib diisi."
+    );
+    return;
+  }
+
+  if(password.length < 6){
+    showToast(
+      "Password minimal 6 karakter."
+    );
+    return;
+  }
+
+  const exists =
+    accounts.some(
+      user =>
+        user.username.toLowerCase() ===
+        username.toLowerCase()
+    );
+
+  if(exists){
+    showToast("Username sudah digunakan.");
+    return;
+  }
+
+  accounts.push({
+    username,
+    password,
+    role:"user"
+  });
+
+  saveAccounts();
+
+  document.getElementById("newUser").value = "";
+  document.getElementById("newPass").value = "";
+
+  renderUsers();
+  updateStats();
+
+  showToast("✓ User berhasil ditambahkan.");
+}
+
+function editUser(index){
+
+  if(!isAdmin()) return;
+
+  const user = accounts[index];
+
+  if(!user) return;
+
+  const newName =
+    prompt(
+      "Username baru:",
+      user.username
+    );
+
+  if(newName === null) return;
+
+  const cleanName =
+    newName.trim();
+
+  if(!cleanName){
+    showToast("Username tidak boleh kosong.");
+    return;
+  }
+
+  const duplicate =
+    accounts.some(
+      (item,i) =>
+        i !== index &&
+        item.username.toLowerCase() ===
+        cleanName.toLowerCase()
+    );
+
+  if(duplicate){
+    showToast("Username sudah digunakan.");
+    return;
+  }
+
+  user.username = cleanName;
+
+  saveAccounts();
+  renderUsers();
+
+  showToast("✓ Username diperbarui.");
+}
+
+function resetPassword(index){
+
+  if(!isAdmin()) return;
+
+  const user = accounts[index];
+
+  if(!user) return;
+
+  const newPassword =
+    prompt("Password baru:");
+
+  if(newPassword === null) return;
+
+  if(newPassword.length < 6){
+    showToast(
+      "Password minimal 6 karakter."
+    );
+    return;
+  }
+
+  user.password = newPassword;
+
+  saveAccounts();
+
+  showToast("✓ Password berhasil diubah.");
+}
+
+function deleteUser(index){
+
+  if(!isAdmin()) return;
+
+  const user = accounts[index];
+
+  if(!user) return;
+
+  if(user.role === "admin"){
+    showToast(
+      "⛔ Akun admin tidak dapat dihapus."
+    );
+    return;
+  }
+
+  if(!confirm(
+    "Yakin ingin menghapus user ini?"
+  )){
+    return;
+  }
+
+  accounts.splice(index,1);
+
+  saveAccounts();
+  renderUsers();
+  updateStats();
+
+  showToast("✓ User berhasil dihapus.");
+}
+
+function renderUsers(){
+
+  const list =
+    document.getElementById("userList");
+
+  if(!list || !isAdmin()) return;
+
+  const search =
+    (
+      document.getElementById("searchUser")
+        ?.value || ""
+    ).toLowerCase();
+
+  const filtered =
+    accounts.filter(
+      user =>
+        user.username
+          .toLowerCase()
+          .includes(search)
+    );
+
+  if(!filtered.length){
+
+    list.innerHTML =
+      `<div style="
+        padding:15px 0;
+        color:#65748a;
+        font-size:10px">
+        User tidak ditemukan.
+      </div>`;
+
+    return;
+  }
+
+  list.innerHTML =
+    filtered.map(user => {
+
+      const index =
+        accounts.indexOf(user);
+
+      return `
+        <div class="user-row">
+
+          <div>
+            <div class="user-name">
+              ${escapeHTML(user.username)}
+            </div>
+
+            <div class="user-meta">
+              ROLE: ${escapeHTML(user.role)}
+            </div>
+          </div>
+
+          <div class="user-actions">
+
+            <button
+              class="small-btn"
+              onclick="editUser(${index})">
+              ✏ EDIT
+            </button>
+
+            <button
+              class="small-btn"
+              onclick="resetPassword(${index})">
+              🔑 RESET PW
+            </button>
+
+            ${
+              user.role !== "admin"
+              ? `
+                <button
+                  class="small-btn red"
+                  onclick="deleteUser(${index})">
+                  🗑 HAPUS
+                </button>
+              `
+              : ""
+            }
+
+          </div>
+
+        </div>
+      `;
+    }).join("");
+}
+
+
+/* =========================
+   REPORT GENERATOR
+========================= */
+
+const templates = {
+
+  temporary:
+  "Saya ingin mengajukan permintaan peninjauan terhadap pembatasan sementara pada akun saya. Mohon dilakukan pemeriksaan kembali terhadap akun dan aktivitas terkait. Apabila pembatasan terjadi karena kesalahan deteksi, saya memohon agar akses akun dapat dipertimbangkan untuk dipulihkan.",
+
+  permanent:
+  "Saya ingin mengajukan permintaan peninjauan terhadap pembatasan permanen pada akun saya. Mohon dilakukan pemeriksaan kembali terhadap akun dan penyebab pembatasannya. Apabila pembatasan terjadi karena kesalahan deteksi, saya memohon agar akun dapat dipertimbangkan untuk dipulihkan.",
+
+  spam:
+  "Saya ingin meminta pemeriksaan terhadap akun saya karena kemungkinan terdeteksi sebagai aktivitas spam. Mohon dilakukan pemeriksaan kembali apabila pembatasan tersebut terjadi akibat kesalahan deteksi.",
+
+  hacked:
+  "Saya menduga akun saya telah diakses atau digunakan oleh pihak lain tanpa izin. Saya memohon bantuan untuk melakukan pemeriksaan terhadap akun dan mempertimbangkan kondisi tersebut dalam proses peninjauan.",
+
+  unknown:
+  "Saya tidak mengetahui penyebab akun saya mengalami pembatasan. Saya memohon agar dilakukan pemeriksaan terhadap akun dan aktivitas terkait. Apabila pembatasan terjadi karena kesalahan, saya berharap akses akun dapat dipulihkan."
+};
+
+function generate(){
+
+  const name =
+    document.getElementById("name")
+      .value.trim() || "Pengguna";
+
+  const number =
+    document.getElementById("number")
+      .value.trim();
+
+  const type =
+    document.getElementById("banType")
+      .value;
+
+  const language =
+    document.getElementById("language")
+      .value;
+
+  if(!number){
+    showToast(
+      "Masukkan nomor terlebih dahulu."
+    );
+    return;
+  }
+
+  let text = "";
+
+  if(language === "id"){
+
+    text =
+`Halo Tim Dukungan,
+
+Nama: ${name}
+Nomor akun: ${number}
+
+${templates[type]}
+
+Saya bersedia mengikuti ketentuan penggunaan yang berlaku.
+
+Terima kasih atas waktu dan bantuannya.
+
+Hormat saya,
+${name}`;
+
+  }else{
+
+    text =
+`Hello Support Team,
+
+Name: ${name}
+Account number: ${number}
+
+I would like to request a review of my account and its current restriction.
+
+Please review the account and related activity. If the restriction was caused by an incorrect detection, I kindly request reconsideration.
+
+Thank you for your assistance.
+
+Sincerely,
+${name}`;
+  }
+
+  document.getElementById("result")
+    .value = text;
+
+  counter();
+
+  saveReport(
+    type,
+    number
+  );
+}
+
+
+/* =========================
+   HISTORY
+========================= */
+
+function saveReport(type,number){
+
+  total += 1;
+
+  reports.unshift({
+    type,
+    number,
+    user:getCurrentUser(),
+    time:new Date().toLocaleString("id-ID")
+  });
+
+  reports =
+    reports.slice(0,50);
+
+  saveReports();
+  renderHistory();
+  updateStats();
+
+  showToast("✓ Report berhasil dibuat.");
+}
+
+function getCurrentUser(){
+
+  try{
+    return sessionStorage.getItem(
+      "unban_user"
+    ) || "unknown";
+  }catch(e){
+    return "unknown";
+  }
+}
+
+function renderHistory(){
+
+  const list =
+    document.getElementById(
+      "historyList"
+    );
+
+  const count =
+    document.getElementById(
+      "historyCount"
+    );
+
+  count.textContent =
+    reports.length + " ITEMS";
+
+  if(!reports.length){
+
+    list.innerHTML =
+      `<div style="
+        padding:18px 0;
+        color:#65748a;
+        font-size:10px">
+        Belum ada laporan.
+      </div>`;
+
+    return;
+  }
+
+  list.innerHTML =
+    reports.map(
+      (item,index) => `
+        <div class="history-row">
+
+          <div>
+            <b>
+              #${index + 1}
+              ${escapeHTML(item.type)}
+            </b>
+
+            <div style="
+              margin-top:5px;
+              color:#65748a;
+              font-size:8px">
+              ${escapeHTML(item.number)}
+              •
+              ${escapeHTML(item.user)}
+              •
+              ${escapeHTML(item.time)}
+            </div>
+          </div>
+
+          <span class="badge">
+            CREATED
+          </span>
+
+        </div>
+      `
+    ).join("");
+}
+
+
+/* =========================
+   ADMIN ACTIONS
+========================= */
+
+function clearHistory(){
+
+  if(!isAdmin()) return;
+
+  if(!confirm(
+    "Yakin ingin menghapus semua history?"
+  )){
+    return;
+  }
+
+  reports = [];
+
+  saveReports();
+  renderHistory();
+
+  showToast("✓ History dihapus.");
+}
+
+function resetStats(){
+
+  if(!isAdmin()) return;
+
+  if(!confirm(
+    "Reset total statistik?"
+  )){
+    return;
+  }
+
+  total = 0;
+
+  saveReports();
+  updateStats();
+
+  showToast("✓ Statistik di-reset.");
+}
+
+
+/* =========================
+   COPY
+========================= */
+
+function copyReport(){
+
+  const text =
+    document.getElementById("result")
+      .value;
+
+  if(!text){
+    showToast("Tidak ada laporan.");
+    return;
+  }
+
+  if(
+    navigator.clipboard &&
+    window.isSecureContext
+  ){
+
+    navigator.clipboard.writeText(text)
+      .then(
+        () => showToast("✓ Laporan disalin.")
+      )
+      .catch(
+        () => fallbackCopy()
+      );
+
+  }else{
+
+    fallbackCopy();
+  }
+}
+
+function fallbackCopy(){
+
+  const area =
+    document.getElementById("result");
+
+  area.focus();
+  area.select();
+
+  try{
+    document.execCommand("copy");
+    showToast("✓ Laporan disalin.");
+  }catch(e){
+    showToast(
+      "Tidak bisa menyalin otomatis."
+    );
+  }
+
+  window.getSelection()?.removeAllRanges();
+}
+
+
+/* =========================
+   DOWNLOAD
+========================= */
+
+function downloadReport(){
+
+  const text =
+    document.getElementById("result")
+      .value;
+
+  if(!text){
+    showToast("Tidak ada laporan.");
+    return;
+  }
+
+  try{
+
+    const blob =
+      new Blob(
+        [text],
+        {type:"text/plain;charset=utf-8"}
+      );
+
+    const url =
+      URL.createObjectURL(blob);
+
+    const link =
+      document.createElement("a");
+
+    link.href = url;
+    link.download =
+      "unban-report.txt";
+
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+
+    setTimeout(
+      () => URL.revokeObjectURL(url),
+      500
+    );
+
+    showToast("✓ File berhasil dibuat.");
+
+  }catch(e){
+
+    showToast("Gagal membuat file.");
+  }
+}
+
+
+/* =========================
+   FORM
+========================= */
+
+function resetForm(){
+
+  document.getElementById("name")
+    .value = "";
+
+  document.getElementById("number")
+    .value = "";
+
+  document.getElementById("result")
+    .value = "";
+
+  counter();
+}
+
+function counter(){
+
+  const result =
+    document.getElementById("result");
+
+  const chars =
+    document.getElementById("chars");
+
+  chars.textContent =
+    result.value.length;
+}
+
+
+/* =========================
+   STATS
+========================= */
+
+function updateStats(){
+
+  document.getElementById("total")
+    .textContent = total;
+
+  document.getElementById("userCount")
+    .textContent = accounts.length;
+}
+
+
+/* =========================
+   CLOCK
+========================= */
+
+function updateClock(){
+
+  const clock =
+    document.getElementById("clock");
+
+  if(!clock) return;
+
+  clock.textContent =
+    new Date().toLocaleString(
+      "id-ID",
+      {
+        day:"2-digit",
+        month:"short",
+        hour:"2-digit",
+        minute:"2-digit",
+        second:"2-digit"
+      }
+    );
+}
+
+
+/* =========================
+   TOAST
+========================= */
+
+let toastTimer = null;
+
+function showToast(message){
+
+  const toast =
+    document.getElementById("toast");
+
+  if(!toast) return;
+
+  toast.textContent = message;
+  toast.classList.add("show");
+
+  if(toastTimer){
+    clearTimeout(toastTimer);
+  }
+
+  toastTimer =
+    setTimeout(
+      () => {
+        toast.classList.remove("show");
+      },
+      2300
+    );
+}
+
+
+/* =========================
+   SECURITY DISPLAY
+========================= */
+
+function escapeHTML(value){
+
+  return String(value)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+}
+
+
+/* =========================
+   LOAD
+========================= */
+
+function loadAll(){
+
+  updateStats();
+  renderHistory();
+  renderUsers();
+  applyRole();
+  updateClock();
+}
+
+
+/* =========================
+   START
+========================= */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  function(){
+
+    updateClock();
+
+    setInterval(
+      updateClock,
+      1000
+    );
+
+    if(isLogged()){
+      openApp();
+    }
+  }
+);
+
+</script>
+
+</body>
+</html>
